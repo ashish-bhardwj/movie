@@ -1,0 +1,48 @@
+<nav class="navbar navbar-expand-lg">
+
+
+    <a class="navbar-brand">Book Your Favourite Movies here !!</a>
+
+    <ul class='nav navbar-nav'>
+
+        <li class="nav-item dropdown" ngbDropdown >
+            <a href="javascript:void(0)" class="nav-link" ngbDropdownToggle>
+
+
+                <label style="color:white;">Menu</label>
+                <b class="caret"></b>
+            </a>
+            <div class="dropdown-menu-right" ngbDropdownMenu>
+
+                <a  [routerLink]="['/admin']" class="dropdown-item">
+                    <i class="fa fa-book"></i>&nbsp;{{ 'Movies' }}
+                </a>
+    
+                <a  [routerLink]="['addMovies']" class="dropdown-item">
+                    <i class="fa fa-book"></i>&nbsp; &nbsp;{{ 'Add Movies'  }}
+                </a>
+
+            </div>
+        </li>
+    </ul>
+
+    <ul class="navbar-nav ml-auto">
+        <li class="nav-item dropdown" ngbDropdown >
+            <a href="javascript:void(0)" class="nav-link" ngbDropdownToggle>
+
+
+                <label style="color:white;" (click)="logout()">Logout</label>
+            </a>
+        </li>
+
+    </ul>
+
+</nav>
+
+<div class="row">
+    <div class="col-md-11" style="margin-left:80px;">
+        <br>
+            <app-child></app-child>
+    </div>
+   
+</div>

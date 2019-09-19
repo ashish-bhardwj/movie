@@ -1,0 +1,130 @@
+<div class="row">
+  <div class="col-sm-4" style="margin-top:0.2vw ; color:rgb(0, 0, 0)">
+      <h4>Select how do you want to add movies  :</h4>
+  </div>
+  <div class="col-sm-3" style="margin-right:2vw">
+      <select
+          id="secret" class="form-control" 
+          [ngModel]="defaultQuestion" name="secret"
+          (ngModelChange)="selectOption($even)"
+          required
+      >
+          <option value="1">Add Movies from Google</option>
+          <option value="2">Add Movies Manually</option>
+      </select>
+  </div>
+</div>
+
+
+<div class='card' style="margin-top:35px;margin-right: 35px;" *ngIf="!bookChange">
+      <div class='card-header text-center'>
+        <h4 class="text-muted"> Add Movies from Google</h4> 
+        </div>
+        <br>
+      <div class="col-sm-8 text-center">
+       <input  id = "input" type ='text' placeholder="Book/Author Name  " #searchbox/>
+              <button  id="inputButton"  (click)="search(searchbox.value)">
+              search
+          </button>
+          <br>
+      </div>
+  <br>
+      <div class="row">
+          <div class="container-fluid">
+                  <div *ngIf='APIbooks==1' >
+                      <div class="row" id="card">
+                          <div class="col-sm-8" style="margin-left:90px;">
+                              <div> <h6 id="title">Title : {{title }}</h6></div>
+                              <div id="author"><p>Author : {{actors }}</p></div></div>  
+                          <div class="col-sm-2" >
+                              <button class="button1" (click)="show(books)">Save To Libaray</button> 
+                          </div>   
+                      </div> 
+                  </div>  
+          </div>
+      </div>
+</div>
+
+<br>
+<div class='card' style="margin-top:25px;margin-right: 35px;" *ngIf="bookChange">
+      <div class='card-header text-center'>
+        <h4 class="text-muted"> Add Movies Manually</h4> 
+        </div>
+<br>
+      <form [formGroup]="movieForm">      
+
+              <div class="row">
+                  <div class='col-md-2'></div>
+                  <div class='col-md-2'><label>Movie Title</label></div>
+                  <div class='col-md-8'>
+                      <input name="title" type="text" formControlName="title" required  placeholder="Movie Title">
+                  </div>    
+              </div>
+            
+              <div class="row">
+                  <div class='col-md-2'></div>
+                  <div class='col-md-2'> <label>Genre</label></div>
+                  <div class='col-md-8'>
+                      <input name="genre"  type="text"  formControlName="genre" required>
+                  </div>
+              </div>
+              <div class="row">
+                  <div class='col-md-2'></div>
+                  <div class='col-md-2'> <label for="author">Description</label></div>
+                  <div class='col-md-8'>
+                      <textarea name="description" rows="2" cols="22" formControlName="description" required></textarea>
+                  </div>
+              </div>
+              <div class="row">
+                <div class='col-md-2'></div>
+                <div class='col-md-2'><label for="Rating">Rating</label></div>
+                <div class='col-md-8'>
+                    <input name="rating" type="text"  formControlName="rating" required>
+                </div>
+              </div>
+              <div class="row">
+                  <div class='col-md-2'></div>
+                  <div class='col-md-2'><label for="poster">Poster</label></div>
+                  <div class='col-md-8'>
+                      <input name="poster" type="text" formControlName="poster" required>
+                  </div>
+              </div>
+              <div class="row">
+                  <div class='col-md-2'></div>
+                  <div class='col-md-2'><label for="language">Language</label></div>
+                  <div class='col-md-8'>
+                      <input name="language" type="text" formControlName="language" required>
+                  </div>
+              </div>
+
+              <div class="row">
+                <div class='col-md-2'></div>
+                <div class='col-md-2'><label for="location">Location</label></div>
+                <div class='col-md-8'>
+                    <input name="location" type="text" formControlName="location" required>
+                </div>
+            </div>
+
+              <div class="row">
+                  <div class='col-md-2'></div>
+                  <div class='col-md-2'><label for="count">Release Date</label></div>
+                  <div class='col-md-8'>
+                      <input name="releaseDate" type="text" formControlName="releaseDate" required>
+                  </div>
+              </div>
+              
+             
+            <br>
+              <div class="row">
+                  <div class='col-md-4'></div>
+                  <div class='col-md-1'>
+                      <button type="button" class="btn btn-danger left" (click)="resetForm(movieForm)">Reset</button>
+                  </div>
+                  <div class='col-md-1'>
+                      <button type="submit" class="btn btn-success right" (click)="onSubmit()">Submit</button>
+                  </div>            
+              </div>
+              <br>
+              </form>
+              
+</div>

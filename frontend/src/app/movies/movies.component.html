@@ -1,0 +1,151 @@
+<div class="card">
+  <div class="card-header text-center text-muted">
+   <h3> List of Movies</h3>
+  </div>
+  <br>
+ 
+    
+ 
+       <br>
+
+   <div *ngIf="movies== null" class="text-center text-muted">
+     <h3>Currently no movies available right now !!</h3>
+   </div>    
+   <div class="row" *ngIf="movies!= null">
+     <div class="col-md-12">
+ 
+       <div class="container">
+ 
+        
+          <div class='row'>
+               <div class='col-md-2'>Search by:</div>
+               <div class='col-md-6'>
+                 <input type='text' placeholder="Title"
+                 [(ngModel)]='searchtext'/>          
+               </div>
+          </div>
+          <br>
+
+          
+        
+        
+
+          <div class="card-header text-center text-muted">
+            <div class="row">
+                <div class='col-md-2 '>
+                    <a [routerLink]="['/movies']"  [routerLinkActive]="['router-link-active']" class="list-group-item" (click)="nowShowing()">
+                      <span>{{ 'Now Showing'  }}</span>
+                  </a>
+                  </div>
+                  <div class='col-md-2'> 
+                    <a [routerLink]="['/movies']"  [routerLinkActive]="['router-link-active']" class="list-group-item" (click)="nextChange()">
+                      <span>{{ 'Next Change'  }}</span>
+                      </a>
+                  </div>
+            </div>
+           </div>
+ 
+             <br>
+ 
+ 
+         <div class="row" *ngIf='showing==true'>
+           <div class="col-sm-4 mb-2" *ngFor='let movie of nowMovies | sortBy: sortByKey | searchpipe: searchtext'>
+             <div class="item">
+               <div class=" mb-r">
+                 <!--Card-->
+                 <div class="card" style="width:300px">
+                   <!--Card image-->
+                   <a>
+                     <div class="view overlay hm-white-slight">
+                       <img [src]="movie.poster"  alt="Not Available" width="300px" height="180px">
+                       <a>
+                         <div class="mask waves-effect waves-light" mdbRippleRadius></div>
+                       </a>
+                     </div>
+                   </a>
+                   <!--/.Card image-->
+                   <!--Card content-->
+                   <div class="card-body text-center no-padding">
+                     <!--Category & Title-->
+                     <p class="card-title">
+                      <a [routerLink]="['movie', movie._id]" routerLinkActive="router-link-active">{{ movie.title }}</a>
+                     </p>
+                    
+                    
+                     <!--Description-->
+                     <p class="card-text text-muted text-left">Rating:{{ movie.rating }}</p>
+                     <!--Card footer-->
+                     <p class="card-text text-muted text-left">{{ movie.location }}</p>
+                     <hr>
+                     <h6 class="text-left">Book</h6>
+                     <span style="float: left"><i class="fa fa-clock-o" style="font-size:24px;"></i>&nbsp;<a>{{movie.timings}}</a> </span>
+                   </div>
+                   <!--/.Card content-->
+              <!--<button class="btn btn-primary">Reserve</button>-->     
+                   <div class="card-footer">
+                    <span> <a [routerLink]="['book', movie._id]" routerLinkActive="router-link-active">
+                      <button class="btn btn-primary">Reserve</button></a></span>
+                    <span style="float:right"> <a [routerLink]="['movies/movie', movie._id]" routerLinkActive="router-link-active">
+                      <i class="fa fa-share" style="font-size:36px;color:grey"></i></a></span>
+                  </div>
+                 </div>
+                 <!--/.Card-->
+ 
+               </div>
+             </div>
+           </div>
+         </div>
+         <!-- Pagination -->
+
+
+         <div class="row" *ngIf='showing==false'>
+          <div class="col-sm-4 mb-2" *ngFor='let movie of nextMovies | sortBy: sortByKey | searchpipe: searchtext'>
+            <div class="item">
+              <div class=" mb-r">
+                <!--Card-->
+                <div class="card" style="width:300px" *ngIf='showing==false'>
+                  <!--Card image-->
+                  <a>
+                    <div class="view overlay hm-white-slight">
+                      <img [src]="movie.poster"  alt="Not Available" width="300px" height="180px">
+                      <a>
+                        <div class="mask waves-effect waves-light" mdbRippleRadius></div>
+                      </a>
+                    </div>
+                  </a>
+                  <!--/.Card image-->
+                  <!--Card content-->
+                  <div class="card-body text-center no-padding">
+                    <!--Category & Title-->
+                    <p class="card-title">
+                     <a [routerLink]="['movie', movie._id]" routerLinkActive="router-link-active">{{ movie.title }}</a>
+                    </p>
+                   
+                   
+                    <!--Description-->
+                    <p class="card-text text-muted text-left">Rating:{{ movie.rating }}</p>
+                    <!--Card footer-->
+                    <p class="card-text text-muted text-left">{{ movie.location }}</p>
+                    <hr>
+                    <h6 class="text-left">Book</h6>
+                    <span style="float: left"><i class="fa fa-clock-o" style="font-size:24px;"></i>&nbsp;<a>{{movie.timings}}</a> </span>
+                  </div>
+                  <!--/.Card content-->
+                  <div class="card-footer">
+                    <span> <a (click)="notify()" style="cursor:pointer"><i class="fa fa-bell" style="font-size:36px;color:yellowgreen"></i></a></span>
+                    <span style="float:right"> <a [routerLink]="['movie', movie._id]" routerLinkActive="router-link-active">
+                      <i class="fa fa-share" style="font-size:36px;color:grey"></i></a></span>
+                  </div>
+                
+                </div>
+                <!--/.Card-->
+
+              </div>
+            </div>
+          </div>
+        </div>
+       </div>
+       <!--/.Card-->
+     </div>
+   </div>
+ </div>

@@ -9,9 +9,13 @@ import { PipeModule } from '../sharedModule/pipe/pipe.module';
 import { MovieDetailComponent } from './movie-detail/movie-detail.component';
 import { TooltipModule } from 'ngx-bootstrap';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { LoaderComponent } from '../sharedModule/loader/loader.component';
+import { MyBookingComponent } from './my-booking/my-booking.component';
+import { TheatresComponent } from './theatres/theatres.component';
+import { MovieTheatreComponent } from './movie-theatre/movie-theatre.component';
 
 @NgModule({
-  declarations: [MoviesComponent, MovieDetailComponent],
+  declarations: [MoviesComponent, MovieDetailComponent,LoaderComponent, MyBookingComponent, TheatresComponent, MovieTheatreComponent],
   imports: [
     CommonModule,
     MoviesRoutingModule,
@@ -20,7 +24,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     PipeModule,
     FormsModule,
     TooltipModule.forRoot(),
-    NgbModule
+    NgbModule,
+    MaterialModule,
   ]
 })
 export class MoviesModule { }

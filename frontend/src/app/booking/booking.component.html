@@ -1,75 +1,66 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<div class="card">
-  <div class="card-header text-center text-muted">
-   <h3>Book now</h3>
+
+<div class='card'>
+  <div class='card-header'>
+      <h4 class="text-center text-muted">Select seats</h4>
   </div>
+  <div class='card-body'>
 
-  <div class="card-body text-center text-muted">
-      <div class='row'>
-          <h4>Title : {{movie.title}}</h4> &nbsp; &nbsp; &nbsp;
-          <h4>Cinema : {{movie.location}}</h4>
-      </div>
-<div style="text-align:center">
-</div>
-<div class="col-lg-12 seat-container" >
-  <div  *ngFor="let seatrow of seatmap " >
-      <div class="col-12 pricing-label" *ngIf="seatChartConfig?.showRowWisePricing && seatrow.seatPricingInformation != ''">{{seatrow.seatPricingInformation}}</div>
-      <div class="seatrow container">
-         
-          <div *ngFor="let seatobj of seatrow.seats">
-              <div class="seat-item seat-space" style="color:white ; background-color:white" *ngIf="seatobj.seatLabel == ''">  &nbsp; </div>
-              <div tooltip="Seat : {{seatobj.seatLabel}} | Price : {{seatobj.price}}Rs" placement="top"
-              [ngClass]="{ 'seat-item' : true , 'seat-available' : seatobj.status == 'available' ,'seat-booked' : seatobj.status == 'booked' ,'seat-unavailable' : seatobj.status == 'unavailable' }" 
-               (click)="selectSeat(seatobj)" *ngIf="(seatobj.status == 'available' || seatobj.status == 'booked' )&& seatobj.seatLabel != ''">{{seatobj.seatNo}}</div>
-               
-              <div tooltip="Seat not available" placement="top"
-              [ngClass]="{ 'seat-item' : true , 'seat-unavailable' : true }" 
-              *ngIf="seatobj.status == 'unavailable' && seatobj.seatLabel != ''">{{seatobj.seatNo}}</div>
-          </div>
-      </div>
-  </div>
-</div>
-
-<div class="container">
-  <div class="well" style="background-color: chocolate; width: auto;height: 50px;text-align: center;padding-top: 3px;"><h3>Screen</h3></div>
-</div>
-
-<!-- *ngIf="cart?.selectedSeats?.length > 0" -->
-<div  class="container">
-  <div class="col-lg-12 summary-bar">
-      <div class="col-lg-4" >
-              <div>
-                  <h5>Total Selected : {{ cart?.selectedSeats?.length }}</h5>
-                  <h5>Total Amount :&nbsp;&nbsp; {{cart.totalamount}} Rs</h5>
+      <div class="container">
+          <main class="innerContainer">
+              <div class="movie">
+                  <h3 class="movieTitle">{{title}}</h3>
+                  <div class="movieDetails">{{location}} - {{time}}</div>
               </div>
-      </div>
-      <div class="col-lg-8 selected-seats">
-          <h5 class="col-lg-12 no-padding">Selected Seats : </h5>
-          <span *ngFor="let seatLabel of cart.selectedSeats" class="badge badge-primary">{{seatLabel}}</span>
-      </div>
-  </div>
-  <div class="row">
-      <div class="col-sm-6">
-          <button  type="button"  (click)="cancel()" class="btn btn-primary" mdbWavesEffect>Cancel</button>
+        
+              <!-- Showing a static legend bar -->
+              <div class="legend">
+                  <span class="freeSeat"> <i class="fa fa-circle" aria-hidden="true"></i></span> FREE
+                  <span class="reservedSeat padding-left">  <i class="fa fa-ban" aria-hidden="true"></i></span> TAKEN
+                  <span class="selectedSeat padding-left">  <i class="fa fa-check" aria-hidden="true"></i></span> SELECTED                
+              </div>
+        
+              <p class="font14 marginTop5">SCREEN THIS WAY</p>
+              <div class="screen"></div>
+        
+              <!-- Generate the seating grid -->
+              <div *ngFor="let row of rows">
+                  <span class="seat" *ngFor="let col of cols" (click)="seatClicked(row + col)" 
+                          [ngSwitch]="getStatus(row + col)">
+                      <span *ngSwitchCase="'selected'" class="selectedSeat">
+                        <i class="fa fa-check" aria-hidden="true"></i>
+                      </span>
+                      <span *ngSwitchCase="'reserved'" class="glyphicon glyphicon-ban-circle reservedSeat">
+                        <i class="fa fa-ban" aria-hidden="true"></i>
+                      </span>
+                      <span *ngSwitchDefault class="freeSeat">
+                        <i class="fa fa-circle" aria-hidden="true"></i>
+                      </span>
+                  </span>
+              </div>
+        
+              <!-- Structural directive - only visible on selection -->
+              <div *ngIf="selected.length > 0" class="font14 marginTB10">
+                  <div class="wordWrap">SEATS RESERVED : {{selected.length}} ({{selected}})</div>
+                  <div>PRICE : {{ticketPrice}} * {{selected.length}} = {{currency}}.{{ticketPrice*selected.length}} </div>
+                  <div>CONVENIENCE FEE : {{currency}}.{{convFee}}</div>
+                  <div>TOTAL : {{currency}}.{{ticketPrice * selected.length + convFee}}</div>
+              </div>
+        
+              <!-- Action buttons -->
+              <div class="buttonBar marginTop5">
+                  <button (click)="cancel()" [disabled]="selected.length === 0" class="btn btn-default btn-sm">Clear</button>
+                  <button (click)="processBooking()" [disabled]="selected.length === 0" class="btn btn-success btn-sm">Buy Tickets</button>
+              </div>        
+          </main>     
         </div>
-      
-        <div class="col-sm-6">
-            <button [disabled]="cart?.selectedSeats?.length == 0" type="button"  (click)="processBooking()" class="btn btn-primary" mdbWavesEffect>Book Now</button>
-          </div>  
 
-  </div>
- 
-</div>
-
-</div>
   
-  
-</div>   
-
-<div class="row">
-  <div class="col-md-11" style="margin-left:80px;">
-      <br>
-          <app-child></app-child>
   </div>
- 
-</div>
+  <div class='card-footer'>
+      <button class='btn btn-outline-secondary'
+              (click)='goBack()'
+              style='width:80px'>
+        <i class='fa fa-chevron-left'></i> Back
+      </button>
+    </div>
+</div>    

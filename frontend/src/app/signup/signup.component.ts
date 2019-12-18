@@ -35,7 +35,7 @@ export class SignupComponent implements OnInit {
       return;
   }
     this.userService.register(this.userform.value).subscribe(data => {
-      if(data==1){
+      if(data==true){
         this.router.navigate(['']);
       } else {
         this.router.navigate(['/register']);

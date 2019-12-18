@@ -1,0 +1,62 @@
+<mat-card>
+<mat-card-header>
+  <mat-card-title>Select theatre</mat-card-title>
+</mat-card-header>
+
+       <div *ngIf="theatres.length==0" class="text-center text-muted">
+         <h3>Currently no shows available for this movie !!</h3>
+       </div>  
+       <app-loader></app-loader>  
+       <div class="row" *ngIf="theatres!= null">
+         <div class="col-md-12">
+     
+           <div class="container">
+     
+            
+              <div class='row' *ngIf="theatres.length!=0">
+                   <div class='col-md-2'>Search by:</div>
+                   <div class='col-md-6'>
+                     <input type='text' placeholder="Title"
+                     [(ngModel)]='searchtext'/>          
+                   </div>
+              </div>
+              <br>
+    
+              
+            
+          
+     
+                 <br>
+     
+     
+             <div class="row">
+                <div *ngFor="let theatre of filteredTheatres | searchpipe: searchtext">
+                    <mat-card class="example-card">
+                      <mat-card-title>{{theatre.name | titlecase}}</mat-card-title>
+                          <mat-card-subtitle>{{theatre.location | titlecase}}</mat-card-subtitle>
+                          <mat-card-subtitle>
+                           <h4> {{movie.title}}</h4>
+                        </mat-card-subtitle>
+                          <mat-card-subtitle *ngFor="let movie of theatre.movies">Timings:  <button *ngFor="let time of movie.timings" (click)=book(theatre,time)>
+                            {{time}}
+                          </button> &nbsp;</mat-card-subtitle>                 
+                                              
+                    </mat-card>
+                  </div>
+             </div>
+           
+    
+           </div>
+           <!--/.Card-->
+         </div>
+       </div>
+
+      <mat-card-actions>
+        <button class='btn btn-outline-secondary'
+                (click)='goBack()'
+                style='width:80px'>
+          <i class='fa fa-chevron-left'></i> Back
+        </button>
+      </mat-card-actions>
+    </mat-card>      
+     

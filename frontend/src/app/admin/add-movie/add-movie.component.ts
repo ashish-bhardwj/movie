@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MovieService } from 'src/app/sharedModule/service/movie.service';
 import { Movie } from 'src/app/sharedModule/model/movie';
+import { stringify } from 'querystring';
 
 @Component({
   selector: 'app-add-movie',
@@ -33,7 +34,9 @@ export class AddMovieComponent implements OnInit {
         'language': ['', [Validators.required]],
         'genre': ['', [Validators.required]],
         'poster': ['', [Validators.required]],
-        'releaseDate': ['', [Validators.required]]
+        'releaseDate': ['', [Validators.required]],
+        'showing':['',[Validators.required]],
+        'location':['',[Validators.required]]
       });
 
   }
@@ -75,6 +78,13 @@ export class AddMovieComponent implements OnInit {
  show(data:any){
    this.movieService.bookData=data;
    console.log("title:"+this.movieService.bookData.Title);
+   var today = new Date();
+   var release:string=this.movieService.bookData.Released;
+   var ary:string[]=release.split(" ");
+   var year1=+ary[2];
+   var year2 =today.getFullYear();
+   console.log('year1'+year1);
+   console.log('year2:'+year2);
      let movie:Movie={
        _id:null,
      title:this.movieService.bookData.Title,
@@ -87,8 +97,15 @@ export class AddMovieComponent implements OnInit {
      timings:[""],
      actors:this.movieService.bookData.Actors,
      releaseDate:this.movieService.bookData.Released,
+     
      showing:null
    }
+   if(year1>year2){
+     movie.showing=false;
+   }
+   else {
+    movie.showing=true;
+  }
    console.log(this.movieService.bookData.Title);
    this.movieService.postBooks(movie).subscribe((res)=>{
      this.resetForm(this.movieForm);

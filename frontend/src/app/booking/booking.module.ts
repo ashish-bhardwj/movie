@@ -8,11 +8,11 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { PipeModule } from '../sharedModule/pipe/pipe.module';
 import { TooltipModule } from 'ngx-bootstrap';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { PaymentComponent } from './payment/payment.component';
 import { ChildComponent } from './child/child.component';
+import { BrowserModule } from '@angular/platform-browser';
 
 @NgModule({
-  declarations: [BookingComponent, PaymentComponent, ChildComponent],
+  declarations: [BookingComponent, ChildComponent],
   imports: [
     CommonModule,
     BookingRoutingModule,

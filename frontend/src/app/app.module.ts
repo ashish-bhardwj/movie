@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule }                from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
@@ -15,6 +15,9 @@ import {
   FacebookLoginProvider,
   AuthService,
 } from "angular-6-social-login";
+import { BookingModule } from './booking/booking.module';
+import { LoaderComponent } from './sharedModule/loader/loader.component';
+import { LoaderInterceptor } from './sharedModule/interceptors/loader.interceptor';
 
 
 // Configs 
@@ -43,11 +46,13 @@ let config = new AuthServiceConfig(
     FormsModule,
     AppRoutingModule,
     MaterialModule,
-    ReactiveFormsModule,
+    ReactiveFormsModule
   ],
-  providers: [AuthService, {
+  providers: [AuthService,
+    { provide: HTTP_INTERCEPTORS, useClass: LoaderInterceptor, multi: true } ,{
     provide: AuthServiceConfig,
-    useFactory: getAuthServiceConfigs
+    useFactory: getAuthServiceConfigs,
+   
   }],
   bootstrap: [AppComponent]
 })

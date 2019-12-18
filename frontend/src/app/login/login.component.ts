@@ -53,7 +53,13 @@ export class LoginComponent implements OnInit {
          
           if(data.email==this.form.controls.email.value){
           //  let image;
-          //  this.loginService.storeUserData(data.token, data.user,image);
+     //     console.log(data);
+     let user={
+       id:data._id,
+       name:data.firstName
+
+     }
+            this.loginService.storeUserData( user);
            
            //   this.loginService.getName();
              this.router.navigate(['/movies']);
@@ -69,6 +75,13 @@ export class LoginComponent implements OnInit {
   }
 }
 
+google(){
+  this.loginService.google().subscribe((data)=>{
+    console.log(data);
+    this.router.navigate(['/movies']);
+  });
+}
+
 googleLogin(data:string){
   if(data == "google"){
     let socialPlatformProvider;
@@ -81,7 +94,7 @@ googleLogin(data:string){
          this.loginService.loginWithGoogle(userData.email , userData.name)
          .subscribe(
           data => {
-            this.loginService.storeUserData(data.token, data.user,userData.image);
+         //   this.loginService.storeUserData(data.token, data.user,userData.image);
             this.loginService.getName();
            // localStorage.setItem('id_token', data.toString());
             this.router.navigate(['/book']);

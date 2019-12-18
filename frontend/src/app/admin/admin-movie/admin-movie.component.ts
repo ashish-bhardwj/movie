@@ -5,7 +5,7 @@ import { MovieService } from 'src/app/sharedModule/service/movie.service';
 @Component({
   selector: 'app-admin-movie',
   templateUrl: './admin-movie.component.html',
-  styleUrls: ['./admin-movie.component.css']
+  styleUrls: ['./admin-movie.component.scss']
 })
 export class AdminMovieComponent implements OnInit {
   movies:Movie[];
@@ -38,6 +38,15 @@ export class AdminMovieComponent implements OnInit {
        this.movies=res as Movie[];
        this.filteredMovies=this.movies;
      });
+   }
+
+   onDelete(id:string){
+    if(confirm('Are you sure to delete this record ?')==true){ 
+      this.movieService.deleteBook(id).subscribe((res)=>{
+        this.getMovies();
+    //    this.resetForm(form);
+      })
+    }
    }
 
 }

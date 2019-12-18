@@ -38,7 +38,9 @@
 
         <div class='row'>
           <div class='col-md-4'>Timings:</div>
-          <div class='col-md-8'>{{movie.timings}}</div>
+          <div class='col-md-8'><button *ngFor="let time of movie.timings">
+            {{time}}
+          </button></div>
         </div>
 
         <div class='row'>

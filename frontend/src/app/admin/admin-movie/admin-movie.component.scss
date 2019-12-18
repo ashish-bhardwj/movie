@@ -1,20 +1,6 @@
-$topnav-background-color: #222;
-:host {
-    .navbar {
-        background-color: $topnav-background-color;
-        .navbar-brand {
-            color: #fff;
-        }
-       
-    }
-   
-    
-}
-
-
 .example-card {
     max-width: 250px;
-    height: 400px;
+    height: 440px;
     margin :2vw;
     float:left;
     border-color:antiquewhite;

@@ -7,8 +7,8 @@ import { IUser } from '../model/user';
   providedIn: 'root'
 })
 export class LoginService {
-  readonly baseURL='http://localhost:8080';
-  readonly signup='http://localhost:8080/signup';
+  readonly baseURL='http://localhost:8081';
+  readonly signup='http://localhost:8081/signup';
   authToken: any;
   user: any;
   firstName:String;
@@ -38,12 +38,8 @@ export class LoginService {
     console.log(this.authToken);
   }
 
-  storeUserData(token, user,image){
-    localStorage.setItem('id_token', token);
+  storeUserData( user:any){
     localStorage.setItem('user', JSON.stringify(user));
-    localStorage.setItem('image', image);
-    this.authToken = token;
-    this.user = user;
   }
 
   logout(){
@@ -55,13 +51,14 @@ export class LoginService {
   }
 
   getName(){
-    let a = JSON.parse(localStorage.getItem('user')) || [];
-    this.firstName=a.firstName;
+  //  let a = JSON.parse(localStorage.getItem('user')) || [];
+  //  this.firstName=a.firstName;
   }
 
   loginWithGoogle(email:string,name:string){
   let fullName=name.split(" ");
     const user:IUser={
+      _id:null,
       email:email,
       password : name,
       firstName:fullName[0],
@@ -69,6 +66,10 @@ export class LoginService {
     }
     console.log(user);
     return this.http.post(this.baseURL+'/google', user).pipe(map((res:any)=> res));
+}
+
+google(){
+  return this.http.get(this.baseURL+'/user').pipe(map((res:any)=> res));
 }
 
 register(user:IUser) {

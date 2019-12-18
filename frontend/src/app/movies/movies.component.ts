@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Movie } from '../sharedModule/model/movie';
 import { MovieService } from '../sharedModule/service/movie.service';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-movies',
@@ -11,7 +12,9 @@ export class MoviesComponent implements OnInit {
 movies:Movie[];
 nowMovies:Movie[];
 nextMovies:Movie[];
-  constructor(private movieService:MovieService) { }
+  constructor(private movieService:MovieService,
+    private router:Router,
+    private route:ActivatedRoute) { }
   sortByKey: string='_id';
   showing:boolean=true;
   
@@ -60,5 +63,14 @@ nextMovies:Movie[];
 
   notify(){
     alert('You will be notified once its released !!');
+  }
+
+  logout(){
+    this.router.navigate(['']);
+    localStorage.clear();
+  }
+
+  book(movie:Movie){
+    this.router.navigate(['theatre',movie._id],{relativeTo:this.route});
   }
 }
